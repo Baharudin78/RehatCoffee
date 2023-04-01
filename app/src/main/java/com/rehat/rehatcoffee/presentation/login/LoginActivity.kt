@@ -1,11 +1,12 @@
-package com.rehat.rehatcoffee
+package com.rehat.rehatcoffee.presentation.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.rehat.rehatcoffee.R
 
-class RegisterActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_login)
     }
 }

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">RehatCoffee</string>
+    <string name="masuk_disini">Masuk Disini</string>
+    <string name="sudah_punya_akun">Sudah punya akun ?</string>
+    <string name="masuk">Masuk</string>
+    <string name="role">Role</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="belum_punya_akun">Belum punya akun ?</string>
+    <string name="daftar_disini">Daftar Disini</string>
+    <string name="what_about_coffee_nfriend">What About Coffee, \nFriend</string>
+    <string name="minuman">Minuman</string>
+    <string name="makanan">Makanan</string>
+    <string name="pesan">Pesan</string>
+    <string name="keranjang">Keranjang</string>
+    <string name="detail_pesanan">Detail Pesanan</string>
+    <string name="pemesanan_berhasil_dilakukan_nsilahkan_melakukan_pembayaran_kekasir">Pemesanan Berhasil Dilakukan \nSilahkan Melakukan Pembayaran Kekasir</string>
 </resources>

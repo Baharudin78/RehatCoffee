@@ -70,6 +70,11 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:31.2.3"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+
 }
 kapt {
     correctErrorTypes = true

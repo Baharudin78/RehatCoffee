@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".presentation.login.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -32,13 +32,13 @@
             android:layout_marginBottom="5dp"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto"
-            android:text="Username" />
+            android:text="@string/username" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username">
+            android:hint="@string/username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username_edit_text"
@@ -58,13 +58,13 @@
             android:fontFamily="@font/roboto"
             android:textColor="@color/black"
             android:layout_marginBottom="5dp"
-            android:text="Password" />
+            android:text="@string/password" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -86,7 +86,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/roboto"
-        android:text="Masuk"
+        android:text="@string/masuk"
         android:textAllCaps="false"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,13 +110,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:textColor="@color/black"
-            android:text="Belum punya akun ?" />
+            android:text="@string/belum_punya_akun" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:textColor="@color/bluePrimary"
-            android:text="Daftar Disini" />
+            android:text="@string/daftar_disini" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
