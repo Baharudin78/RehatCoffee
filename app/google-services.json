@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "292797425094",
+    "project_id": "e-comerce-ad10b",
+    "storage_bucket": "e-comerce-ad10b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292797425094:android:549214e0cb9e3906c57ec7",
+        "android_client_info": {
+          "package_name": "com.rehat.rehatcoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292797425094-ts0gl5jqsnie8e8pv4oihh78lul9v8k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrjFMSqUsTKzPYcVlUWtLyjXdNgpGAldI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292797425094-ts0gl5jqsnie8e8pv4oihh78lul9v8k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
