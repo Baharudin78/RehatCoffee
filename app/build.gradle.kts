@@ -5,7 +5,6 @@ plugins {
     id("kotlin-android")
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
-    id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
 }
 
@@ -50,16 +49,17 @@ dependencies {
     testImplementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
-
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.dagger:hilt-android:2.44.2")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
 
     //Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
 
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -70,6 +70,11 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:31.2.3"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-messaging:23.1.2")
+
+    // Activity KTX for viewModels()
+    implementation("androidx.activity:activity-ktx:1.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
