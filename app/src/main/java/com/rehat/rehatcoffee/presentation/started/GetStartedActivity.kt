@@ -4,13 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rehat.rehatcoffee.R
+import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.databinding.ActivityGetStartedBinding
+import com.rehat.rehatcoffee.presentation.home.HomeActivity
 import com.rehat.rehatcoffee.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GetStartedActivity : AppCompatActivity() {
     private lateinit var binding : ActivityGetStartedBinding
+
+    @Inject
+    lateinit var dataStore : TokenDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGetStartedBinding.inflate(layoutInflater)
@@ -21,4 +28,25 @@ class GetStartedActivity : AppCompatActivity() {
             finish()
         }
     }
+
+//    override fun onStart() {
+//        super.onStart()
+//        runBlocking {
+//            checkIsLoggedIn()
+//        }
+//    }
+
+    private suspend fun checkIsLoggedIn(){
+        dataStore.userTokenFlow.collect{
+            if (it.isNotEmpty()){
+                goToHomeActivity()
+            }
+        }
+    }
+
+    private fun goToHomeActivity(){
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
+    }
+
 }

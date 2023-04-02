@@ -17,6 +17,7 @@
     <string name="detail_pesanan">Detail Pesanan</string>
     <string name="button_text_ok">OK</string>
     <string name="error_email_not_valid">Email Tidak Valid</string>
-    <string name="error_password_not_valid">Password Salah</string>
+    <string name="error_password_not_valid">Password Min 8 Karakter</string>
+    <string name="error_username">Username Min 8 Karakter</string>
     <string name="pemesanan_berhasil_dilakukan_nsilahkan_melakukan_pembayaran_kekasir">Pemesanan Berhasil Dilakukan \nSilahkan Melakukan Pembayaran Kekasir</string>
 </resources>

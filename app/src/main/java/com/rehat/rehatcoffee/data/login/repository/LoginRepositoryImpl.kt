@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi
-) : LoginRepository{
+) : LoginRepository {
     override suspend fun login(loginRequest: LoginRequest): Flow<BaseResult<LoginEntity, WrappedResponse<LoginResponse>>> {
         return flow {
             try {
@@ -31,7 +31,14 @@ class LoginRepositoryImpl @Inject constructor(
                     emit(BaseResult.Error(errorResponse))
                 }
             } catch (e: Exception) {
-                emit(BaseResult.Error(WrappedResponse(message = e.message ?: "Error Occured", null)))
+                emit(
+                    BaseResult.Error(
+                        WrappedResponse(
+                            message = e.message ?: "Error Occured",
+                            null
+                        )
+                    )
+                )
             }
         }
     }
@@ -39,8 +46,10 @@ class LoginRepositoryImpl @Inject constructor(
 
 private fun parseErrorResponse(response: Response<*>): WrappedResponse<LoginResponse> {
     val type = object : TypeToken<WrappedResponse<LoginResponse>>() {}.type
-    val errorBody = response.errorBody() ?: return WrappedResponse(message = "Unknown error occurred", null)
-    val errorResponse = Gson().fromJson<WrappedResponse<LoginResponse>>(errorBody.charStream(), type)!!
+    val errorBody =
+        response.errorBody() ?: return WrappedResponse(message = "Unknown error occurred", null)
+    val errorResponse =
+        Gson().fromJson<WrappedResponse<LoginResponse>>(errorBody.charStream(), type)!!
     errorResponse.status = response.code()
     return errorResponse
 }

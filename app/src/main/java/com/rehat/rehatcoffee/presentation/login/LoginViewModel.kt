@@ -22,19 +22,20 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<LoginViewState>(LoginViewState.Init)
-    val state : StateFlow<LoginViewState> get() = _state
+    val state: StateFlow<LoginViewState> get() = _state
 
-    private fun setLoading(){
+    private fun setLoading() {
         _state.value = LoginViewState.IsLoading(true)
     }
 
-    private fun hideLoading(){
+    private fun hideLoading() {
         _state.value = LoginViewState.IsLoading(false)
     }
 
-    private fun showToast(message: String){
+    private fun showToast(message: String) {
         _state.value = LoginViewState.ShowToast(message)
     }
+
     fun login(loginRequest: LoginRequest) {
         viewModelScope.launch {
             loginUseCase.invoke(loginRequest)
@@ -63,10 +64,10 @@ class LoginViewModel @Inject constructor(
 
 }
 
-sealed class LoginViewState{
+sealed class LoginViewState {
     object Init : LoginViewState()
-    data class IsLoading(val isLoading : Boolean) : LoginViewState()
-    data class ShowToast(val message : String) : LoginViewState()
+    data class IsLoading(val isLoading: Boolean) : LoginViewState()
+    data class ShowToast(val message: String) : LoginViewState()
     data class SuccessLogin(val loginEntity: LoginEntity) : LoginViewState()
-    data class ErrorLogin(val rawResponse : WrappedResponse<LoginResponse>) : LoginViewState()
+    data class ErrorLogin(val rawResponse: WrappedResponse<LoginResponse>) : LoginViewState()
 }

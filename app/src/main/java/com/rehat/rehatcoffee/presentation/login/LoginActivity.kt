@@ -12,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.iid.internal.FirebaseInstanceIdInternal
 import com.google.firebase.messaging.FirebaseMessaging
 import com.rehat.rehatcoffee.R
+import com.rehat.rehatcoffee.core.Constants
+import com.rehat.rehatcoffee.core.Constants.MIN_PASSWORD_LENGTH
 import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.data.common.utils.WrappedResponse
 import com.rehat.rehatcoffee.data.login.remote.dto.LoginRequest
@@ -29,7 +31,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity(), FirebaseInstanceIdInternal.NewTokenListener {
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var fcmToken: String? = null
     private val viewModel: LoginViewModel by viewModels()
@@ -42,17 +44,30 @@ class LoginActivity : AppCompatActivity(), FirebaseInstanceIdInternal.NewTokenLi
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        retrieveFCMToken()
         login()
         observe()
         goToRegisterActivity()
     }
 
+    private fun retrieveFCMToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnSuccessListener { token ->
+                Log.d(TAG, "FCM token: $token")
+                fcmToken = token
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Failed to retrieve FCM token", exception)
+            }
+    }
+
     private fun login() {
         binding.btnLogin.setOnClickListener {
-            val email = binding.usernameEditText.text.toString().trim()
+            val username = binding.usernameEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
-            if (validate(email, password)) {
-                val loginRequest = fcmToken?.let { it1 -> LoginRequest(email, password, it1) }
+            if (validate(username, password)) {
+                val loginRequest =
+                    fcmToken?.let { token -> LoginRequest(username, password, token) }
                 if (loginRequest != null) {
                     viewModel.login(loginRequest)
                 }
@@ -68,7 +83,7 @@ class LoginActivity : AppCompatActivity(), FirebaseInstanceIdInternal.NewTokenLi
             return false
         }
 
-        if (password.length < 8) {
+        if (password.length < MIN_PASSWORD_LENGTH) {
             setPasswordError(getString(R.string.error_password_not_valid))
             return false
         }
@@ -126,16 +141,9 @@ class LoginActivity : AppCompatActivity(), FirebaseInstanceIdInternal.NewTokenLi
         goToMainActivity(loginEntity)
     }
 
-    private val openRegisterActivity =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                goToMainActivity(loginEntity)
-            }
-        }
-
     private fun goToRegisterActivity() {
         binding.btnRegister.setOnClickListener {
-            openRegisterActivity.launch(Intent(this@LoginActivity, RegisterActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
@@ -147,7 +155,8 @@ class LoginActivity : AppCompatActivity(), FirebaseInstanceIdInternal.NewTokenLi
         finish()
     }
 
-    override fun onNewToken(token: String?) {
-        fcmToken = token
+    companion object {
+        private const val TAG = "LoginActivity"
     }
+
 }
