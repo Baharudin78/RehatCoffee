@@ -20,4 +20,6 @@
     <string name="error_password_not_valid">Password Min 8 Karakter</string>
     <string name="error_username">Username Min 8 Karakter</string>
     <string name="pemesanan_berhasil_dilakukan_nsilahkan_melakukan_pembayaran_kekasir">Pemesanan Berhasil Dilakukan \nSilahkan Melakukan Pembayaran Kekasir</string>
+    <string name="tambah">Tambah</string>
+    <string name="daftar">Daftar</string>
 </resources>

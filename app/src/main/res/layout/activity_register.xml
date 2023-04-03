@@ -123,6 +123,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            tools:listitem="@layout/item_role"
             android:id="@+id/rv_list_role"/>
     </LinearLayout>
 
@@ -134,7 +135,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/masuk"
+        android:text="@string/daftar"
         android:textAllCaps="false"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"

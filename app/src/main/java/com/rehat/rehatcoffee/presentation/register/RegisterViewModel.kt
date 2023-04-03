@@ -39,7 +39,7 @@ class RegisterViewModel @Inject constructor(
             registerUseCase.execute(registerRequest)
                 .onStart { showLoading() }
                 .catch { exception -> handleException(exception) }
-                .collect {handleResult(it)}
+                .collect { handleResult(it) }
         }
     }
 
@@ -54,9 +54,11 @@ class RegisterViewModel @Inject constructor(
 
     private fun handleResult(baseResult: BaseResult<RegisterEntity, WrappedResponse<RegisterResponse>>) {
         hideLoading()
-        when(baseResult){
-            is BaseResult.Error -> _state.value = RegisterViewState.ErrorRegister(baseResult.rawResponse)
-            is BaseResult.Success -> _state.value = RegisterViewState.SuccessRegister(baseResult.data)
+        when (baseResult) {
+            is BaseResult.Error -> _state.value =
+                RegisterViewState.ErrorRegister(baseResult.rawResponse)
+            is BaseResult.Success -> _state.value =
+                RegisterViewState.SuccessRegister(baseResult.data)
         }
     }
 }

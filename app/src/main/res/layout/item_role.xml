@@ -9,25 +9,18 @@
         android:id="@+id/layout_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="15dp"
         android:background="@drawable/border_box"
         android:gravity="center_vertical"
         android:paddingHorizontal="20dp"
         android:paddingVertical="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:visibility="gone"
-            android:id="@+id/tv_letter"
-            android:layout_width="wrap_content"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"
-            tools:text="Admin" />
-
-        <TextView
-            android:id="@+id/tv_letter_additional"
+            android:id="@+id/tvRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="User" />

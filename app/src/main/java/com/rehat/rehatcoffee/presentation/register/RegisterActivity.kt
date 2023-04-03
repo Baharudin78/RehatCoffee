@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.messaging.FirebaseMessaging
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.core.Constants.MIN_PASSWORD_LENGTH
@@ -20,11 +21,13 @@ import com.rehat.rehatcoffee.data.register.remote.dto.RegisterResponse
 import com.rehat.rehatcoffee.databinding.ActivityRegisterBinding
 import com.rehat.rehatcoffee.domain.login.entity.LoginEntity
 import com.rehat.rehatcoffee.domain.register.entity.RegisterEntity
+import com.rehat.rehatcoffee.domain.register.entity.RoleEntity
 import com.rehat.rehatcoffee.presentation.common.extention.isEmail
 import com.rehat.rehatcoffee.presentation.common.extention.showGenericAlertDialog
 import com.rehat.rehatcoffee.presentation.common.extention.showToast
 import com.rehat.rehatcoffee.presentation.home.HomeActivity
 import com.rehat.rehatcoffee.presentation.login.LoginActivity
+import com.rehat.rehatcoffee.presentation.register.adapter.RoleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,6 +38,8 @@ class RegisterActivity : AppCompatActivity() {
     private var fcmToken: String? = null
     private val viewModel: RegisterViewModel by viewModels()
     private val registerEntity: RegisterEntity? = null
+    private var dataList = ArrayList<RoleEntity>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,8 @@ class RegisterActivity : AppCompatActivity() {
         retrieveFCMToken()
         register()
         observe()
+        setupAdapterRole()
+        setupListRole()
         goLoginActivity()
     }
 
@@ -123,6 +130,19 @@ class RegisterActivity : AppCompatActivity() {
         binding.passwordInputLayout.error = e
     }
 
+    private fun setupAdapterRole(){
+        val filterAdapter = RoleAdapter(dataList)
+        filterAdapter.setItemClickListener(object : RoleAdapter.OnItemClickListener{
+            override fun onClick(filterModel: RoleEntity) {
+                binding.tvRole.text = filterModel.name
+            }
+        })
+        binding.rvListRole.apply {
+            layoutManager = LinearLayoutManager(this@RegisterActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = filterAdapter
+        }
+    }
+
     private fun observe() {
         viewModel.state
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
@@ -130,7 +150,7 @@ class RegisterActivity : AppCompatActivity() {
             .launchIn(lifecycleScope)
     }
 
-    private fun handleSuccessRegister() {
+    private fun handleSuccessRegister(registerEntity: RegisterEntity) {
         goToLoginActivity()
     }
 
@@ -138,7 +158,7 @@ class RegisterActivity : AppCompatActivity() {
         when (state) {
             is RegisterViewState.Init -> Unit
             is RegisterViewState.ErrorRegister -> handleErrorRegister(state.rawResponse)
-            is RegisterViewState.SuccessRegister -> handleSuccessRegister()
+            is RegisterViewState.SuccessRegister -> handleSuccessRegister(state.registerEntity)
             is RegisterViewState.ShowToast -> showToast(state.message)
             is RegisterViewState.IsLoading -> handleLoading(state.isLoading)
         }
@@ -165,10 +185,23 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun goLoginActivity() {
-        binding.btnRegister.setOnClickListener {
+        binding.btnToLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun setupListRole(){
+        dataList.add(
+            RoleEntity(
+                "admin",
+            )
+        )
+        dataList.add(
+            RoleEntity(
+                "user",
+            )
+        )
     }
 
     companion object {

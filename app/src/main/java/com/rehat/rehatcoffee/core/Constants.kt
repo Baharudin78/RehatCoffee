@@ -15,4 +15,5 @@ object Constants {
     //Endpoints
     const val LOGIN_URL = "client/login"
     const val REGISTER_URL = "client/register"
+    const val PRODUCTS_DRINK = "client/product?kinds=drink"
 }
