@@ -3,12 +3,14 @@ package com.rehat.rehatcoffee.presentation.started
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.databinding.ActivityGetStartedBinding
 import com.rehat.rehatcoffee.presentation.home.HomeActivity
 import com.rehat.rehatcoffee.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -29,12 +31,12 @@ class GetStartedActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        runBlocking {
-//            checkIsLoggedIn()
-//        }
-//    }
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch {
+            checkIsLoggedIn()
+        }
+    }
 
     private suspend fun checkIsLoggedIn(){
         dataStore.userTokenFlow.collect{
