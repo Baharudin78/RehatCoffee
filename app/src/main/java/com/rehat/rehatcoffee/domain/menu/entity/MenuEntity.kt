@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class MenuEntity(
     val id: String? = null,
     val description: String? = null,
-    val imagesEntity: List<ImageMenuResponse?>,
+    val imagesEntity: List<ImageMenuEntity?>,
     val price: Int? = null,
     val productName: String? = null,
 ) : Parcelable

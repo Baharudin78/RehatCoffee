@@ -16,4 +16,5 @@ object Constants {
     const val LOGIN_URL = "client/login"
     const val REGISTER_URL = "client/register"
     const val PRODUCTS_DRINK = "client/product?kinds=drink"
+    const val PRODUCTS_FOOD = "client/product?kinds=food"
 }

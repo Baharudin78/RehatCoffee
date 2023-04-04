@@ -9,7 +9,7 @@ fun MenuResponse.toMenuEntity(): MenuEntity {
     return MenuEntity(
         id = id,
         description = description,
-        imagesEntity = images
+        imagesEntity = convertImageResponseToEntity(images)
     )
 
 }
@@ -18,5 +18,15 @@ fun ImageMenuResponse.toImageMenuEntity(): ImageMenuEntity {
     return ImageMenuEntity(
         name, publicId, url
     )
+}
+
+private fun convertImageResponseToEntity(image : List<ImageMenuResponse?>): List<ImageMenuEntity>{
+    return image.map {
+        ImageMenuEntity(
+            name = it?.name,
+            publicId = it?.publicId,
+            url = it?.url
+        )
+    }
 }
 
