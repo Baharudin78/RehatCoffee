@@ -3,16 +3,24 @@ package com.rehat.rehatcoffee.presentation.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.core.Constants
+import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.databinding.ActivityHomeBinding
+import com.rehat.rehatcoffee.presentation.login.LoginActivity
 import com.rehat.rehatcoffee.presentation.menu.drink.DrinkActivity
 import com.rehat.rehatcoffee.presentation.menu.food.FoodActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
+
+    @Inject
+    lateinit var dataStore : TokenDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -26,6 +34,25 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this@HomeActivity, FoodActivity::class.java))
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch {
+            checkIsLoggedIn()
+        }
+    }
+    private suspend fun checkIsLoggedIn(){
+        dataStore.userTokenFlow.collect{
+            if (it.isEmpty()){
+                goToLoginActivity()
+            }
+        }
+    }
+
+    private fun goToLoginActivity(){
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
     companion object{
         const val HOME_EXTRA = Constants.HOME_EXTRA
