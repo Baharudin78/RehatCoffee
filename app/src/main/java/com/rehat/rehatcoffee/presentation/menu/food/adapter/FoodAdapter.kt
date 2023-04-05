@@ -1,6 +1,5 @@
-package com.rehat.rehatcoffee.presentation.menu.drink.adapter
+package com.rehat.rehatcoffee.presentation.menu.food.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,9 +10,9 @@ import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
 import com.rehat.rehatcoffee.presentation.common.extention.gone
 import com.rehat.rehatcoffee.presentation.common.extention.visible
 
-class DrinkAdapter(
-    private val drink: MutableList<MenuEntity>
-) : RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder>() {
+class FoodAdapter(
+    private val food: MutableList<MenuEntity>
+) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     interface OnItemClickToCart {
         fun onClickToCart(menuEntity: MenuEntity)
@@ -44,20 +43,20 @@ class DrinkAdapter(
     private var onClickListenerUpdateCart: OnItemClickTUpdateCart? = null
     private var onClickListenerDeleteCart: OnItemClickDeleteCart? = null
 
-    fun updateListDrink(menu: List<MenuEntity>) {
-        drink.clear()
-        drink.addAll(menu)
+    fun updateListFood(menu: List<MenuEntity>) {
+        food.clear()
+        food.addAll(menu)
         notifyDataSetChanged()
     }
 
-    inner class DrinkViewHolder(private val binding: ItemMenuBinding) :
+    inner class FoodViewHolder(private val binding: ItemMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
+
         fun bindItem(menu: MenuEntity) {
             binding.apply {
                 Glide.with(binding.root.context)
                     .load(menu.imagesEntity)
-                    .placeholder(R.drawable.drink)
+                    .placeholder(R.drawable.vegetable)
                     .into(ivPhoto)
                 tvName.text = menu.productName
                 tvAlias.text = menu.description
@@ -81,16 +80,16 @@ class DrinkAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         val inflater = ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DrinkViewHolder(inflater)
+        return FoodViewHolder(inflater)
     }
 
     override fun getItemCount(): Int {
-        return drink.size
+        return food.size
     }
 
-    override fun onBindViewHolder(holder: DrinkViewHolder, position: Int) {
-        holder.bindItem(drink[position])
+    override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
+        holder.bindItem(food[position])
     }
 }

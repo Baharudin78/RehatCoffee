@@ -14,6 +14,7 @@ import com.rehat.rehatcoffee.presentation.common.extention.gone
 import com.rehat.rehatcoffee.presentation.common.extention.showToast
 import com.rehat.rehatcoffee.presentation.common.extention.visible
 import com.rehat.rehatcoffee.presentation.menu.drink.adapter.DrinkAdapter
+import com.rehat.rehatcoffee.presentation.menu.food.adapter.FoodAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,12 +32,31 @@ class DrinkActivity : AppCompatActivity() {
         setupRecycleview()
         fetchMenuDrink()
         initObserver()
+        initListener()
+    }
+
+    private fun initListener() {
+        binding.icBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupRecycleview() {
         val drinkAdapter = DrinkAdapter(mutableListOf())
-        drinkAdapter.setItemClickListener(object : DrinkAdapter.OnItemClick {
-            override fun onClick(menuEntity: MenuEntity) {
+        drinkAdapter.setItemClicktoCart(object : DrinkAdapter.OnItemClickToCart {
+            override fun onClickToCart(menuEntity: MenuEntity) {
+                showToast("Click")
+            }
+        })
+
+        drinkAdapter.setItemClickUpdateCart(object  : DrinkAdapter.OnItemClickTUpdateCart{
+            override fun onClickUpdateCart(menu: MenuEntity) {
+                showToast("click")
+            }
+        })
+
+        drinkAdapter.setItemClickDeleteCart(object : DrinkAdapter.OnItemClickDeleteCart{
+            override fun onClickDeleteCart(menu: MenuEntity) {
                 showToast("Click")
             }
         })
@@ -49,12 +69,13 @@ class DrinkActivity : AppCompatActivity() {
     private fun fetchMenuDrink() {
         viewModel.fetchMenuDrink()
     }
-    private fun initObserver(){
+
+    private fun initObserver() {
         observeState()
         observeDrink()
     }
 
-    private fun observeState(){
+    private fun observeState() {
         viewModel.state
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
@@ -63,7 +84,7 @@ class DrinkActivity : AppCompatActivity() {
             .launchIn(lifecycleScope)
     }
 
-    private fun observeDrink(){
+    private fun observeDrink() {
         viewModel.drinks
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { drinks ->
@@ -72,25 +93,26 @@ class DrinkActivity : AppCompatActivity() {
             .launchIn(lifecycleScope)
     }
 
-    private fun handleDrink(drink : List<MenuEntity>){
+    private fun handleDrink(drink: List<MenuEntity>) {
         binding.rvDrink.adapter?.let { drinks ->
-            if(drinks is DrinkAdapter){
+            if (drinks is DrinkAdapter) {
                 drinks.updateListDrink(drink)
             }
         }
     }
-    private fun handleState(state : GetMenuDrinkViewState){
-        when(state){
+
+    private fun handleState(state: GetMenuDrinkViewState) {
+        when (state) {
             is GetMenuDrinkViewState.IsLoading -> handleLoading(state.isLoading)
             is GetMenuDrinkViewState.ShowToast -> this.showToast(state.message)
             is GetMenuDrinkViewState.Init -> Unit
         }
     }
 
-    private fun handleLoading(isLoading: Boolean){
-        if(isLoading){
+    private fun handleLoading(isLoading: Boolean) {
+        if (isLoading) {
             binding.progressBar.visible()
-        }else{
+        } else {
             binding.progressBar.gone()
         }
     }

@@ -28,22 +28,24 @@ class DrinkViewModel @Inject constructor(
         fetchMenuDrink()
     }
 
-    fun fetchMenuDrink(){
+    fun fetchMenuDrink() {
         viewModelScope.launch {
             getMenuUseCase.getMenuDrink()
                 .onStart { _state.value = GetMenuDrinkViewState.IsLoading(true) }
                 .catch { exception ->
                     _state.value = GetMenuDrinkViewState.IsLoading(false)
-                    _state.value = GetMenuDrinkViewState.ShowToast(exception.message ?: "An error occurred")
+                    _state.value =
+                        GetMenuDrinkViewState.ShowToast(exception.message ?: "An error occurred")
                 }
                 .collect { result ->
                     _state.value = GetMenuDrinkViewState.IsLoading(false)
-                    when(result){
+                    when (result) {
                         is BaseResult.Success -> {
                             _drinks.value = result.data
                         }
                         is BaseResult.Error -> {
-                            _state.value = GetMenuDrinkViewState.ShowToast(result.rawResponse.message ?: "")
+                            _state.value =
+                                GetMenuDrinkViewState.ShowToast(result.rawResponse.message ?: "")
                         }
                     }
                 }
@@ -54,5 +56,5 @@ class DrinkViewModel @Inject constructor(
 sealed class GetMenuDrinkViewState {
     object Init : GetMenuDrinkViewState()
     data class IsLoading(val isLoading: Boolean) : GetMenuDrinkViewState()
-    data class ShowToast(val message : String) : GetMenuDrinkViewState()
+    data class ShowToast(val message: String) : GetMenuDrinkViewState()
 }
