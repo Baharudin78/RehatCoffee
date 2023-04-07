@@ -102,6 +102,7 @@ class FoodActivity : AppCompatActivity() {
             is GetMenuFoodViewState.IsLoading -> handleLoading(state.isLoading)
             is GetMenuFoodViewState.ShowToast -> this.showToast(state.message)
             is GetMenuFoodViewState.Init -> Unit
+            else -> {}
         }
     }
 

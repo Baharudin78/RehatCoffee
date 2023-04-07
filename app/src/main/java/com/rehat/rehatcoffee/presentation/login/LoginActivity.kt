@@ -1,18 +1,15 @@
 package com.rehat.rehatcoffee.presentation.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.iid.internal.FirebaseInstanceIdInternal
 import com.google.firebase.messaging.FirebaseMessaging
 import com.rehat.rehatcoffee.R
-import com.rehat.rehatcoffee.core.Constants
 import com.rehat.rehatcoffee.core.Constants.MIN_PASSWORD_LENGTH
 import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.data.common.utils.WrappedResponse

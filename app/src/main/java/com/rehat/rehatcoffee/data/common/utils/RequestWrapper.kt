@@ -12,3 +12,8 @@ data class WrappedListResponse<T> (
     @SerializedName("status") var status : Int? = null,
     @SerializedName("data") var data : List<T>? = null
 )
+
+data class MessageResponse(
+    val message: String? = null,
+    val statusCode: Int? = null,
+)

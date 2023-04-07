@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rehat.rehatcoffee.domain.common.base.BaseResult
 import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
 import com.rehat.rehatcoffee.domain.menu.usecase.MenuUseCase
+import com.rehat.rehatcoffee.presentation.menu.food.GetMenuFoodViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +25,17 @@ class DrinkViewModel @Inject constructor(
     private val _drinks = MutableStateFlow<List<MenuEntity>>(emptyList())
     val drinks: StateFlow<List<MenuEntity>> get() = _drinks
 
+    private fun setLoading(){
+        _state.value = GetMenuDrinkViewState.IsLoading(true)
+    }
+
+    private fun hideLoading(){
+        _state.value = GetMenuDrinkViewState.IsLoading(false)
+    }
+
+    private fun showToast(message: String){
+        _state.value = GetMenuDrinkViewState.ShowToast(message)
+    }
     init {
         fetchMenuDrink()
     }
@@ -31,21 +43,21 @@ class DrinkViewModel @Inject constructor(
     fun fetchMenuDrink() {
         viewModelScope.launch {
             getMenuUseCase.getMenuDrink()
-                .onStart { _state.value = GetMenuDrinkViewState.IsLoading(true) }
+                .onStart {
+                    setLoading()
+                }
                 .catch { exception ->
-                    _state.value = GetMenuDrinkViewState.IsLoading(false)
-                    _state.value =
-                        GetMenuDrinkViewState.ShowToast(exception.message ?: "An error occurred")
+                    hideLoading()
+                    showToast(exception.message ?: "Error No Found")
                 }
                 .collect { result ->
-                    _state.value = GetMenuDrinkViewState.IsLoading(false)
+                    hideLoading()
                     when (result) {
                         is BaseResult.Success -> {
                             _drinks.value = result.data
                         }
                         is BaseResult.Error -> {
-                            _state.value =
-                                GetMenuDrinkViewState.ShowToast(result.rawResponse.message ?: "")
+                            showToast(result.rawResponse.message ?: "Error Occured")
                         }
                     }
                 }

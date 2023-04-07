@@ -40,7 +40,6 @@ class RegisterActivity : AppCompatActivity() {
     private val registerEntity: RegisterEntity? = null
     private var dataList = ArrayList<RoleEntity>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -130,15 +129,16 @@ class RegisterActivity : AppCompatActivity() {
         binding.passwordInputLayout.error = e
     }
 
-    private fun setupAdapterRole(){
+    private fun setupAdapterRole() {
         val filterAdapter = RoleAdapter(dataList)
-        filterAdapter.setItemClickListener(object : RoleAdapter.OnItemClickListener{
+        filterAdapter.setItemClickListener(object : RoleAdapter.OnItemClickListener {
             override fun onClick(filterModel: RoleEntity) {
                 binding.tvRole.text = filterModel.name
             }
         })
         binding.rvListRole.apply {
-            layoutManager = LinearLayoutManager(this@RegisterActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@RegisterActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = filterAdapter
         }
     }
@@ -191,7 +191,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListRole(){
+    private fun setupListRole() {
         dataList.add(
             RoleEntity(
                 "admin",

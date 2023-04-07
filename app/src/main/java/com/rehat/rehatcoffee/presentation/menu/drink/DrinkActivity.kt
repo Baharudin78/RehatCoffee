@@ -14,6 +14,8 @@ import com.rehat.rehatcoffee.presentation.common.extention.gone
 import com.rehat.rehatcoffee.presentation.common.extention.showToast
 import com.rehat.rehatcoffee.presentation.common.extention.visible
 import com.rehat.rehatcoffee.presentation.menu.drink.adapter.DrinkAdapter
+import com.rehat.rehatcoffee.presentation.menu.food.FoodViewModel
+import com.rehat.rehatcoffee.presentation.menu.food.GetMenuFoodViewState
 import com.rehat.rehatcoffee.presentation.menu.food.adapter.FoodAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -23,7 +25,7 @@ import kotlinx.coroutines.flow.onStart
 @AndroidEntryPoint
 class DrinkActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrinkBinding
-    private val viewModel: DrinkViewModel by viewModels()
+    private val viewModel: FoodViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDrinkBinding.inflate(layoutInflater)
@@ -85,13 +87,15 @@ class DrinkActivity : AppCompatActivity() {
     }
 
     private fun observeDrink() {
-        viewModel.drinks
+        viewModel.foods
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { drinks ->
                 handleDrink(drinks)
             }
             .launchIn(lifecycleScope)
     }
+
+
 
     private fun handleDrink(drink: List<MenuEntity>) {
         binding.rvDrink.adapter?.let { drinks ->
@@ -101,11 +105,12 @@ class DrinkActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleState(state: GetMenuDrinkViewState) {
+    private fun handleState(state: GetMenuFoodViewState) {
         when (state) {
-            is GetMenuDrinkViewState.IsLoading -> handleLoading(state.isLoading)
-            is GetMenuDrinkViewState.ShowToast -> this.showToast(state.message)
-            is GetMenuDrinkViewState.Init -> Unit
+            is GetMenuFoodViewState.IsLoading -> handleLoading(state.isLoading)
+            is GetMenuFoodViewState.ShowToast -> this.showToast(state.message)
+            is GetMenuFoodViewState.Init -> Unit
+            else -> {}
         }
     }
 
