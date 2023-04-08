@@ -160,6 +160,7 @@ class FoodActivity : AppCompatActivity() {
 
     private fun handleCartCountState(state: CartIndicatorViewState) {
         when (state) {
+            is CartIndicatorViewState.SuccessCartCount -> handleCartCount(state.cartIndicatorEntity)
             is CartIndicatorViewState.ShowToast -> this.showToast(state.message)
             is CartIndicatorViewState.Init -> Unit
             else -> {}

@@ -155,7 +155,7 @@ class FoodViewModel @Inject constructor(
                     showToast(exception.message ?: "Error occured")
                 }
                 .collect{ result ->
-                    hideLoading()
+                    hideCartCountLoading()
                     when(result){
                         is BaseResult.Success -> {
                             _cartCount.value = result.data
@@ -215,7 +215,6 @@ sealed class CartIndicatorViewState {
     data class ShowToast(val message: String) : CartIndicatorViewState()
     data class SuccessCartCount(val cartIndicatorEntity: CartIndicatorEntity) :
         CartIndicatorViewState()
-
     data class Error(val rawResponse: WrappedResponse<CartIndicatorResponse>) :
         CartIndicatorViewState()
 }
