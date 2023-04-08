@@ -14,7 +14,7 @@ class UpdateCartUseCase @Inject constructor(
 ) {
     suspend fun updateCart(
         id: String,
-        qty: CreateCartRequest
+        qty: Int
     ): Flow<BaseResult<CartDataEntity, WrappedResponse<CartDataResponse>>> {
         return repository.updateCart(id, qty)
     }

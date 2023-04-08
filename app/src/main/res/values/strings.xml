@@ -13,6 +13,7 @@
     <string name="minuman">Minuman</string>
     <string name="makanan">Makanan</string>
     <string name="pesan">Pesan</string>
+    <string name="checkout">Checkout</string>
     <string name="keranjang">Keranjang</string>
     <string name="detail_pesanan">Detail Pesanan</string>
     <string name="button_text_ok">OK</string>
@@ -21,5 +22,6 @@
     <string name="error_username">Username Min 8 Karakter</string>
     <string name="pemesanan_berhasil_dilakukan_nsilahkan_melakukan_pembayaran_kekasir">Pemesanan Berhasil Dilakukan \nSilahkan Melakukan Pembayaran Kekasir</string>
     <string name="tambah">Tambah</string>
+    <string name="ditambahkan">Ditambahkan</string>
     <string name="daftar">Daftar</string>
 </resources>

@@ -19,30 +19,11 @@ class DrinkAdapter(
         fun onClickToCart(menuEntity: MenuEntity)
     }
 
-    interface OnItemClickTUpdateCart {
-        fun onClickUpdateCart(menu: MenuEntity)
-    }
-
-    interface OnItemClickDeleteCart {
-        fun onClickDeleteCart(menu: MenuEntity)
-    }
-
-
     fun setItemClicktoCart(onClick: OnItemClickToCart) {
         onClickListenerToCart = onClick
     }
 
-    fun setItemClickUpdateCart(onClickUpdateCart: OnItemClickTUpdateCart) {
-        onClickListenerUpdateCart = onClickUpdateCart
-    }
-
-    fun setItemClickDeleteCart(onClickDeleteCart: OnItemClickDeleteCart) {
-        onClickListenerDeleteCart = onClickDeleteCart
-    }
-
     private var onClickListenerToCart: OnItemClickToCart? = null
-    private var onClickListenerUpdateCart: OnItemClickTUpdateCart? = null
-    private var onClickListenerDeleteCart: OnItemClickDeleteCart? = null
 
     fun updateListDrink(menu: List<MenuEntity>) {
         drink.clear()
@@ -55,27 +36,18 @@ class DrinkAdapter(
         @SuppressLint("SetTextI18n")
         fun bindItem(menu: MenuEntity) {
             binding.apply {
-                Glide.with(binding.root.context)
-                    .load(menu.imagesEntity)
-                    .placeholder(R.drawable.drink)
-                    .into(ivPhoto)
+                menu.imagesEntity.map {
+                    Glide.with(binding.root.context)
+                        .load(it?.url)
+                        .placeholder(R.drawable.drink)
+                        .into(ivPhoto)
+                }
                 tvName.text = menu.productName
                 tvAlias.text = menu.description
                 tvPrice.text = menu.price.toString()
 
                 btnAddToCart.setOnClickListener {
                     onClickListenerToCart?.onClickToCart(menu)
-                    layoutEdit.visible()
-                    btnAddToCart.gone()
-                }
-                btnDelete.setOnClickListener {
-                    onClickListenerDeleteCart?.onClickDeleteCart(menu)
-                    btnAddToCart.visible()
-                    layoutEdit.gone()
-                }
-
-                btnEdit.setOnClickListener {
-                    onClickListenerUpdateCart?.onClickUpdateCart(menu)
                 }
             }
         }

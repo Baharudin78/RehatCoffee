@@ -12,7 +12,7 @@ import javax.inject.Inject
 class CreateCartUseCase @Inject constructor(
     private val repository: CartRepository
 ) {
-    suspend fun createCart(productId: CreateCartRequest): Flow<BaseResult<CartDataEntity, WrappedResponse<CartDataResponse>>> {
+    suspend fun createCart(productId: String): Flow<BaseResult<CartDataEntity, WrappedResponse<CartDataResponse>>> {
         return repository.createCart(productId)
     }
 }

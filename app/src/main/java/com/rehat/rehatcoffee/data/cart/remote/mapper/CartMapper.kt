@@ -1,13 +1,7 @@
 package com.rehat.rehatcoffee.data.cart.remote.mapper
 
-import com.rehat.rehatcoffee.data.cart.remote.dto.CartDataResponse
-import com.rehat.rehatcoffee.data.cart.remote.dto.GetCartResponse
-import com.rehat.rehatcoffee.data.cart.remote.dto.ImageCartResponse
-import com.rehat.rehatcoffee.data.cart.remote.dto.ProductCartResponse
-import com.rehat.rehatcoffee.domain.cart.entity.CartDataEntity
-import com.rehat.rehatcoffee.domain.cart.entity.GetCartEntity
-import com.rehat.rehatcoffee.domain.cart.entity.ImageCartEntity
-import com.rehat.rehatcoffee.domain.cart.entity.ProductCartEntity
+import com.rehat.rehatcoffee.data.cart.remote.dto.*
+import com.rehat.rehatcoffee.domain.cart.entity.*
 
 
 fun GetCartResponse.toGetCartEntity(): GetCartEntity {
@@ -33,6 +27,12 @@ fun ProductCartResponse.toProductCartEntity(): ProductCartEntity {
         kinds = kinds,
         price = price,
         productName = productName
+    )
+}
+
+fun CartIndicatorResponse.toCartIndicatorEntity(): CartIndicatorEntity{
+    return CartIndicatorEntity(
+        totalCart = totalCart
     )
 }
 

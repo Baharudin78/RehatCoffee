@@ -4,13 +4,16 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.rehat.rehatcoffee.data.cart.remote.api.CartApi
 import com.rehat.rehatcoffee.data.cart.remote.dto.CartDataResponse
+import com.rehat.rehatcoffee.data.cart.remote.dto.CartIndicatorResponse
 import com.rehat.rehatcoffee.data.cart.remote.dto.CreateCartRequest
 import com.rehat.rehatcoffee.data.cart.remote.dto.GetCartResponse
 import com.rehat.rehatcoffee.data.cart.remote.mapper.toCartDataEntity
+import com.rehat.rehatcoffee.data.cart.remote.mapper.toCartIndicatorEntity
 import com.rehat.rehatcoffee.data.cart.remote.mapper.toGetCartEntity
 import com.rehat.rehatcoffee.data.common.utils.MessageResponse
 import com.rehat.rehatcoffee.data.common.utils.WrappedResponse
 import com.rehat.rehatcoffee.domain.cart.entity.CartDataEntity
+import com.rehat.rehatcoffee.domain.cart.entity.CartIndicatorEntity
 import com.rehat.rehatcoffee.domain.cart.entity.GetCartEntity
 import com.rehat.rehatcoffee.domain.cart.repository.CartRepository
 import com.rehat.rehatcoffee.domain.common.base.BaseResult
@@ -71,7 +74,7 @@ class CartRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun createCart(productId: CreateCartRequest): Flow<BaseResult<CartDataEntity, WrappedResponse<CartDataResponse>>> {
+    override suspend fun createCart(productId: String): Flow<BaseResult<CartDataEntity, WrappedResponse<CartDataResponse>>> {
         return flow {
             try {
                 val createResponse = cartApi.createCart(productId)
@@ -120,7 +123,7 @@ class CartRepositoryImpl @Inject constructor(
 
     override suspend fun updateCart(
         id: String,
-        qty: CreateCartRequest
+        qty: Int
     ): Flow<BaseResult<CartDataEntity, WrappedResponse<CartDataResponse>>> {
         return flow {
             try {
@@ -186,6 +189,53 @@ class CartRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun cartIndicator(): Flow<BaseResult<CartIndicatorEntity, WrappedResponse<CartIndicatorResponse>>> {
+        return flow {
+            try {
+                val indicator = cartApi.getCartIndidator()
+                if (indicator.isSuccessful) {
+                    val body = indicator.body()
+                    if (body != null) {
+                        val cartIndicator = body.data?.toCartIndicatorEntity()
+                        if (cartIndicator != null) {
+                            emit(BaseResult.Success(cartIndicator))
+                        } else {
+                            emit(
+                                BaseResult.Error(
+                                    WrappedResponse(
+                                        message = "Empty response body",
+                                        null
+                                    )
+                                )
+                            )
+                        }
+                    } else {
+                        emit(
+                            BaseResult.Error(
+                                WrappedResponse(
+                                    message = "Null response body",
+                                    null
+                                )
+                            )
+                        )
+                    }
+                } else {
+                    val errorResponse = parseIndicatorErrorResponse(indicator)
+                    emit(BaseResult.Error(errorResponse))
+                }
+            } catch (e: Exception) {
+                emit(
+                    BaseResult.Error(
+                        WrappedResponse(
+                            message = e.message ?: "Error Occured",
+                            status = null
+                        )
+                    )
+                )
+            }
+        }
+    }
+
 
     private fun parseErrorResponse(response: Response<*>): WrappedResponse<GetCartResponse> {
         val type = object : TypeToken<WrappedResponse<GetCartResponse>>() {}.type
@@ -203,6 +253,16 @@ class CartRepositoryImpl @Inject constructor(
             response.errorBody() ?: return WrappedResponse(message = "Unknown error occurred", null)
         val errorResponse =
             Gson().fromJson<WrappedResponse<CartDataResponse>>(errorBody.charStream(), type)!!
+        errorResponse.status = response.code()
+        return errorResponse
+    }
+
+    private fun parseIndicatorErrorResponse(response: Response<*>): WrappedResponse<CartIndicatorResponse> {
+        val type = object : TypeToken<WrappedResponse<CartIndicatorResponse>>() {}.type
+        val errorBody =
+            response.errorBody() ?: return WrappedResponse(message = "Unknown error occurred", null)
+        val errorResponse =
+            Gson().fromJson<WrappedResponse<CartIndicatorResponse>>(errorBody.charStream(), type)!!
         errorResponse.status = response.code()
         return errorResponse
     }

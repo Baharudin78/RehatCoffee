@@ -6,6 +6,7 @@ object Constants {
     const val HOME_EXTRA = "HOME_EXTRA"
     const val MY_PREF = "my_preferences"
     const val USER_TOKEN = "user_token"
+    const val EXTRA_DATA = "EXTRA_DATA"
 
     //Additional
     const val ROLE_EMPTY = "Role Jangan Kosong"
@@ -18,4 +19,5 @@ object Constants {
     const val PRODUCTS_DRINK = "client/product?kinds=drink"
     const val PRODUCTS_FOOD = "client/product?kinds=food"
     const val CART_URL = "client/cart"
+    const val CART_INDICATOR ="client/cart-indicator"
 }
