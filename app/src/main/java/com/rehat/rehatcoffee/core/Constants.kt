@@ -20,4 +20,7 @@ object Constants {
     const val PRODUCTS_FOOD = "client/product?kinds=food"
     const val CART_URL = "client/cart"
     const val CART_INDICATOR ="client/cart-indicator"
+    const val CREATE_ORDER = "client/order"
+    const val GET_ORDER = "client/order"
+    const val ORDER_DETAIL = "client/detail-order"
 }

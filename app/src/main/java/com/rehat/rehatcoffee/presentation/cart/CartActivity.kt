@@ -11,13 +11,21 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rehat.rehatcoffee.core.Constants.EXTRA_DATA
+import com.rehat.rehatcoffee.data.common.utils.WrappedResponse
+import com.rehat.rehatcoffee.data.order.remote.dto.OrderResponse
+import com.rehat.rehatcoffee.data.register.remote.dto.RegisterResponse
 import com.rehat.rehatcoffee.databinding.ActivityCartBinding
 import com.rehat.rehatcoffee.domain.cart.entity.CartDataEntity
 import com.rehat.rehatcoffee.domain.cart.entity.GetCartEntity
+import com.rehat.rehatcoffee.domain.order.entity.OrderEntity
+import com.rehat.rehatcoffee.domain.register.entity.RegisterEntity
 import com.rehat.rehatcoffee.presentation.cart.adapter.CartAdapter
 import com.rehat.rehatcoffee.presentation.common.extention.gone
+import com.rehat.rehatcoffee.presentation.common.extention.showGenericAlertDialog
 import com.rehat.rehatcoffee.presentation.common.extention.showToast
 import com.rehat.rehatcoffee.presentation.common.extention.visible
+import com.rehat.rehatcoffee.presentation.order.OrderActivity
+import com.rehat.rehatcoffee.presentation.register.RegisterViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -42,6 +50,9 @@ class CartActivity : AppCompatActivity() {
             btnBack.setOnClickListener {
                 finish()
             }
+            btnCheckout.setOnClickListener {
+                viewModel.createOrder()
+            }
         }
     }
 
@@ -57,7 +68,12 @@ class CartActivity : AppCompatActivity() {
 
         cartAdapter.setItemClickDeleteCart(object : CartAdapter.OnItemClickDeleteCart {
             override fun onClickDeleteCart(cart: CartDataEntity) {
-                cart.id?.let { viewModel.deleteCart(it) }
+                if (cartAdapter.itemCount == 0){
+                    binding.btnCheckout.isEnabled = false
+                }
+                cart.id?.let {
+                    viewModel.deleteCart(it)
+                }
             }
         })
 
@@ -75,6 +91,14 @@ class CartActivity : AppCompatActivity() {
         observeState()
         observeCart()
         observeDelete()
+        observeOrderState()
+    }
+
+    private fun observeOrderState(){
+        viewModel.orderState
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { state -> handleStateOrderChange(state) }
+            .launchIn(lifecycleScope)
     }
 
     private fun observeState() {
@@ -105,6 +129,15 @@ class CartActivity : AppCompatActivity() {
             .launchIn(lifecycleScope)
     }
 
+    private fun handleStateOrderChange(state: OrderViewState) {
+        when (state) {
+            is OrderViewState.Init -> Unit
+            is OrderViewState.ErrorOrder -> handleErrorOrder(state.rawResponse)
+            is OrderViewState.SuccessOrder -> handleSuccessOrder(state.orderEntity)
+            is OrderViewState.ShowToast -> showToast(state.message)
+            is OrderViewState.IsLoading -> handleLoading(state.isLoading)
+        }
+    }
     private fun handleState(state: CartViewState) {
         when (state) {
             is CartViewState.IsLoading -> handleLoading(state.isLoading)
@@ -125,6 +158,9 @@ class CartActivity : AppCompatActivity() {
             }
         }
     }
+    private fun handleErrorOrder(response: WrappedResponse<OrderResponse>) {
+        showGenericAlertDialog(response.message)
+    }
 
     private fun handleLoading(isLoading: Boolean) {
         if (isLoading) {
@@ -134,6 +170,16 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleSuccessOrder(orderEntity: OrderEntity) {
+        goToOrderActivity(orderEntity)
+    }
+
+    private fun goToOrderActivity(orderEntity: OrderEntity){
+        val intent = Intent(this, OrderActivity::class.java)
+            .putExtra(OrderActivity.ORDER_DATA, orderEntity)
+        startActivity(intent)
+    }
+
     private val updateResut =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -141,4 +187,8 @@ class CartActivity : AppCompatActivity() {
             }
         }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

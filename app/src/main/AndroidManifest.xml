@@ -19,9 +19,12 @@
         android:theme="@style/Theme.RehatCoffee"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.order.OrderListActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.cart.EditCartActivity"
             android:exported="false"
-            android:theme="@style/Theme.NTT.Dialog"/>
+            android:theme="@style/Theme.NTT.Dialog" />
         <activity
             android:name=".presentation.splash.CustomSplashActivity"
             android:exported="false" />

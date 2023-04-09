@@ -32,7 +32,6 @@ class FoodAdapter(
 
     inner class FoodViewHolder(private val binding: ItemMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bindItem(menu: MenuEntity) {
             binding.apply {
                 menu.imagesEntity.map {
