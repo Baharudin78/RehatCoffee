@@ -7,6 +7,9 @@ import com.bumptech.glide.Glide
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.databinding.ItemDetailOrderBinding
 import com.rehat.rehatcoffee.domain.order.entity.ProductOrderListEntity
+import com.rehat.rehatcoffee.presentation.common.extention.generateIDRCurrency
+import java.text.NumberFormat
+import java.util.*
 
 class OrderDetailAdapter(
     private val orderList: MutableList<ProductOrderListEntity>
@@ -31,7 +34,7 @@ class OrderDetailAdapter(
                 }
                 tvName.text = order.product?.productName
                 tvAlias.text = "X ${order.qty}"
-                tvPrice.text = "Rp ${order.totalPrice.toString()}"
+                tvPrice.text = generateIDRCurrency(order.totalPrice?.toDouble() ?: 0.0)
             }
         }
     }
@@ -48,4 +51,5 @@ class OrderDetailAdapter(
     override fun onBindViewHolder(holder: OrderDetailViewHolder, position: Int) {
         holder.bindItem(orderList[position])
     }
+
 }

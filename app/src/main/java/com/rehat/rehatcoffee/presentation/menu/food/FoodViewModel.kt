@@ -51,7 +51,6 @@ class FoodViewModel @Inject constructor(
         _state.value = GetMenuFoodViewState.IsLoading(true)
     }
 
-
     private fun hideLoading() {
         _state.value = GetMenuFoodViewState.IsLoading(false)
     }

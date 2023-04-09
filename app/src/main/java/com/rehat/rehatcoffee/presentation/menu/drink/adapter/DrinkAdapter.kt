@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.databinding.ItemMenuBinding
 import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
+import com.rehat.rehatcoffee.presentation.common.extention.generateIDRCurrency
 import com.rehat.rehatcoffee.presentation.common.extention.gone
 import com.rehat.rehatcoffee.presentation.common.extention.visible
 
@@ -44,7 +45,7 @@ class DrinkAdapter(
                 }
                 tvName.text = menu.productName
                 tvAlias.text = menu.description
-                tvPrice.text = menu.price.toString()
+                tvPrice.text = generateIDRCurrency(menu.price?.toDouble() ?: 0.0)
 
                 btnAddToCart.setOnClickListener {
                     onClickListenerToCart?.onClickToCart(menu)

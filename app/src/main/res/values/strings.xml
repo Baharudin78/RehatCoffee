@@ -24,4 +24,7 @@
     <string name="tambah">Tambah</string>
     <string name="ditambahkan">Ditambahkan</string>
     <string name="daftar">Daftar</string>
+    <string name="notification_title">Pesanan Selesai</string>
+    <string name="pemberitahuan">Pemberitahuan</string>
+    <string name="history">History</string>
 </resources>

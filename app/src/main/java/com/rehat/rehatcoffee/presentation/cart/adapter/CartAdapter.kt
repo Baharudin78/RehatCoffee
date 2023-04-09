@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.databinding.ItemCartBinding
 import com.rehat.rehatcoffee.domain.cart.entity.CartDataEntity
+import com.rehat.rehatcoffee.presentation.common.extention.generateIDRCurrency
 
 class CartAdapter(
     private val cart: MutableList<CartDataEntity>
@@ -48,8 +49,8 @@ class CartAdapter(
                         .into(ivPhoto)
                 }
                 tvName.text = cart.product?.productName
-                tvPrice.text = cart.totalPrice.toString()
-                tvQty.text = cart.qty.toString()
+                tvPrice.text = generateIDRCurrency(cart.totalPrice?.toDouble() ?: 0.0)
+                tvQty.text = "X ${cart.qty}"
 
                 btnDelete.setOnClickListener {
                     onClickListenerDeleteCart?.onClickDeleteCart(cart)

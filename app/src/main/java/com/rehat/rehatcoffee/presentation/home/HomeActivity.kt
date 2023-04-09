@@ -20,6 +20,8 @@ import com.rehat.rehatcoffee.presentation.login.LoginActivity
 import com.rehat.rehatcoffee.presentation.menu.drink.DrinkActivity
 import com.rehat.rehatcoffee.presentation.menu.food.CartIndicatorViewState
 import com.rehat.rehatcoffee.presentation.menu.food.FoodActivity
+import com.rehat.rehatcoffee.presentation.notification.NotificationActivity
+import com.rehat.rehatcoffee.presentation.order.OrderListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -52,7 +54,10 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this@HomeActivity, CartActivity::class.java))
             }
             btnToNotif.setOnClickListener {
-              //  startActivity(Intent(this@HomeActivity, Noti::class.java))
+                startActivity(Intent(this@HomeActivity, NotificationActivity::class.java))
+            }
+            btnToList.setOnClickListener {
+                startActivity(Intent(this@HomeActivity, OrderListActivity::class.java))
             }
         }
     }

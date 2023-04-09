@@ -35,6 +35,15 @@ class OrderActivity : AppCompatActivity() {
         getOrderDetail()
         setupRecycleview()
         observe()
+        initListener()
+    }
+
+    private fun initListener(){
+        binding.apply {
+            btnBack.setOnClickListener {
+                goToHome()
+            }
+        }
     }
 
     private fun getOrderDetail(){
@@ -78,14 +87,13 @@ class OrderActivity : AppCompatActivity() {
                 order.updateOrder(orders)
             }
         }
-        binding.tvTotal.text = "Total Bayar Rp${orderEntity.totalPrice}"
+        binding.tvTotal.text = generateIDRCurrency(orderEntity.totalPrice?.toDouble() ?: 0.0)
     }
 
     private fun handleStateOrderDetail(state: OrderViewState) {
         when (state) {
             is OrderViewState.Init -> Unit
             is OrderViewState.ErrorOrder -> handleErrorOrder(state.rawResponse)
-           // is OrderViewState.SuccessOrder -> handleSuccessOrder(state.orderEntity)
             is OrderViewState.ShowToast -> showToast(state.message)
             is OrderViewState.IsLoading -> handleLoading(state.isLoading)
             else -> {}
