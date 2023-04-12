@@ -25,4 +25,9 @@ object Constants {
     const val ORDER_DETAIL = "client/detail-order"
     const val GET_NOTIFICATION = "client/notification"
     const val INDICATOR_NOTIF = "client/notification-indicator"
+
+    const val PRODUCT_ADMIN = "admin/product"
+
+    //Admin
+    const val ROLE = "admin"
 }

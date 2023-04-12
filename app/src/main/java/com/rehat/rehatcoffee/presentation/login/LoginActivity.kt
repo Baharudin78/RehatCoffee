@@ -11,12 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.messaging.FirebaseMessaging
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.core.Constants.MIN_PASSWORD_LENGTH
+import com.rehat.rehatcoffee.core.Constants.ROLE
 import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.data.common.utils.WrappedResponse
 import com.rehat.rehatcoffee.data.login.remote.dto.LoginRequest
 import com.rehat.rehatcoffee.data.login.remote.dto.LoginResponse
 import com.rehat.rehatcoffee.databinding.ActivityLoginBinding
 import com.rehat.rehatcoffee.domain.login.entity.LoginEntity
+import com.rehat.rehatcoffee.presentation.admin.dashboard.AdminDashboardActivity
 import com.rehat.rehatcoffee.presentation.common.extention.isEmail
 import com.rehat.rehatcoffee.presentation.common.extention.showGenericAlertDialog
 import com.rehat.rehatcoffee.presentation.common.extention.showToast
@@ -145,11 +147,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity(loginEntity: LoginEntity?) {
-        startActivity(
-            Intent(this@LoginActivity, HomeActivity::class.java)
-                .putExtra(HomeActivity.HOME_EXTRA, loginEntity)
-        )
-        finish()
+        val role = loginEntity?.userData?.role
+        if (role == ROLE){
+            startActivity(
+                Intent(this@LoginActivity, AdminDashboardActivity::class.java)
+            )
+            finish()
+        }else{
+            startActivity(
+                Intent(this@LoginActivity, HomeActivity::class.java)
+                    .putExtra(HomeActivity.HOME_EXTRA, loginEntity)
+            )
+            finish()
+        }
     }
 
     companion object {

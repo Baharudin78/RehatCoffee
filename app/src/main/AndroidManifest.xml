@@ -19,6 +19,15 @@
         android:theme="@style/Theme.RehatCoffee"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.admin.menu.MenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.orderan.ListOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.dashboard.AdminDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.notification.NotificationActivity"
             android:exported="false" />
         <activity
