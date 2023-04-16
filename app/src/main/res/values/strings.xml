@@ -42,4 +42,6 @@
     <string name="jenis_product">Jenis Product</string>
     <string name="masukan_deskripsi_product">Masukan Deskripsi Product</string>
     <string name="update_product">Update Product</string>
+    <string name="selesaikan">Selesaikan</string>
+    <string name="selesai">Selesai</string>
 </resources>
