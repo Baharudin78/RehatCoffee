@@ -11,6 +11,7 @@ import com.rehat.rehatcoffee.data.product.remote.api.ProductApi
 import com.rehat.rehatcoffee.data.product.remote.dto.ProductResponse
 import com.rehat.rehatcoffee.data.product.remote.mapper.convertImageResponseToEntity
 import com.rehat.rehatcoffee.data.product.remote.mapper.toImageMenuEntity
+import com.rehat.rehatcoffee.data.product.remote.mapper.toProductEntity
 import com.rehat.rehatcoffee.domain.common.base.BaseResult
 import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
 import com.rehat.rehatcoffee.domain.product.entity.ProductEntity
@@ -73,14 +74,7 @@ class ProductRepositoryImpl @Inject constructor(
                 val product = mutableListOf<ProductEntity>()
                 body.data?.forEach { productReponse ->
                     product.add(
-                        ProductEntity(
-                            productReponse.id,
-                            productReponse.description,
-                            productReponse.images.map { it?.toImageMenuEntity() },
-                            productReponse.kinds,
-                            productReponse.price,
-                            productReponse.productName
-                        )
+                        productReponse.toProductEntity()
                     )
                 }
                 emit(BaseResult.Success(product))
@@ -98,7 +92,7 @@ class ProductRepositoryImpl @Inject constructor(
             try {
                 val deleteResponse = productApi.deleteProduct(id)
                 if (deleteResponse.isSuccessful) {
-                    emit(BaseResult.Success(MessageResponse("Product item deleted successfully.")))
+                    emit(BaseResult.Success(MessageResponse("AdminProductOrderResponse item deleted successfully.")))
                 } else {
                     val errorResponse = deleteResponse.errorBody()?.string()
                     val errorMessage =

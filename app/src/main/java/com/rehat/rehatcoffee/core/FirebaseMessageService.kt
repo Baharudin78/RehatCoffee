@@ -40,6 +40,7 @@ class FirebaseMessageService : FirebaseMessagingService() {
             .setContentTitle(getString(R.string.notification_title))
             .setContentText(messageBody)
             .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
 
         val notificationManager =

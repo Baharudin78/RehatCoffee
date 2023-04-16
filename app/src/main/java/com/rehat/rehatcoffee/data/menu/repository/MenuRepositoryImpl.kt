@@ -6,6 +6,7 @@ import com.rehat.rehatcoffee.data.common.utils.WrappedListResponse
 import com.rehat.rehatcoffee.data.menu.remote.api.MenuApi
 import com.rehat.rehatcoffee.data.menu.remote.dto.MenuResponse
 import com.rehat.rehatcoffee.data.menu.remote.mapper.toImageMenuEntity
+import com.rehat.rehatcoffee.data.menu.remote.mapper.toMenuEntity
 import com.rehat.rehatcoffee.domain.common.base.BaseResult
 import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
 import com.rehat.rehatcoffee.domain.menu.repository.MenuRepository
@@ -24,13 +25,7 @@ class MenuRepositoryImpl @Inject constructor(
                 val menuFood = mutableListOf<MenuEntity>()
                 body.data?.forEach { menuResponse ->
                     menuFood.add(
-                        MenuEntity(
-                            menuResponse.id,
-                            menuResponse.description,
-                            menuResponse.images.map { it?.toImageMenuEntity() },
-                            menuResponse.price,
-                            menuResponse.productName
-                        )
+                        menuResponse.toMenuEntity()
                     )
                 }
                 emit(BaseResult.Success(menuFood))
