@@ -45,7 +45,7 @@ class DrinkActivity : AppCompatActivity() {
 
     private fun initListener() {
         binding.apply {
-            icBack.setOnClickListener {
+            btnBack.setOnClickListener {
                 finish()
             }
             btnOrder.setOnClickListener {

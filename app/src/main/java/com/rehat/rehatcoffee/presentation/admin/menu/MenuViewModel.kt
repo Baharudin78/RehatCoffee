@@ -2,6 +2,7 @@ package com.rehat.rehatcoffee.presentation.admin.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rehat.rehatcoffee.data.common.utils.MessageResponse
 import com.rehat.rehatcoffee.domain.common.base.BaseResult
 import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
 import com.rehat.rehatcoffee.domain.product.entity.ProductEntity
@@ -9,10 +10,7 @@ import com.rehat.rehatcoffee.domain.product.usecase.DeleteProductUseCase
 import com.rehat.rehatcoffee.domain.product.usecase.GetProductUseCase
 import com.rehat.rehatcoffee.presentation.menu.food.GetMenuFoodViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +26,9 @@ class MenuViewModel @Inject constructor(
     private val _menu = MutableStateFlow<List<ProductEntity>>(emptyList())
     val menus: StateFlow<List<ProductEntity>> get() = _menu
 
+    private val _deleteCartResult = MutableStateFlow<MessageResponse?>(null)
+    val deleteCartResult: SharedFlow<MessageResponse?> = _deleteCartResult
+
     private fun setLoading() {
         _state.value = GetMenuViewState.IsLoading(true)
     }
@@ -38,6 +39,11 @@ class MenuViewModel @Inject constructor(
 
     private fun showToast(message: String) {
         _state.value = GetMenuViewState.ShowToast(message)
+    }
+
+    init {
+        fetchMenuFood("food")
+        fetchMenuDrink("drink")
     }
 
     fun fetchMenuFood(kinds : String) {
@@ -79,6 +85,30 @@ class MenuViewModel @Inject constructor(
                     when (result) {
                         is BaseResult.Success -> {
                             _menu.value = result.data
+                        }
+                        is BaseResult.Error -> {
+                            showToast(result.rawResponse.message ?: "Error Occured")
+                        }
+                    }
+                }
+        }
+    }
+
+    fun deleteProduct(productId: String) {
+        viewModelScope.launch {
+            deleteProductUseCase.deleteProduct(productId)
+                .onStart {
+                    setLoading()
+                }
+                .catch { exception ->
+                    hideLoading()
+                    showToast(exception.message ?: "Error Occured")
+                }
+                .collect { result ->
+                    hideLoading()
+                    when (result) {
+                        is BaseResult.Success -> {
+                            _deleteCartResult.value = result.data
                         }
                         is BaseResult.Error -> {
                             showToast(result.rawResponse.message ?: "Error Occured")

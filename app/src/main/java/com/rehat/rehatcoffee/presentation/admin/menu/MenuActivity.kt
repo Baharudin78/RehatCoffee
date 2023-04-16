@@ -1,8 +1,8 @@
 package com.rehat.rehatcoffee.presentation.admin.menu
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.databinding.ActivityMenuBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +14,24 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initListener()
+
+    }
+
+    private fun initListener() {
+        binding.apply {
+            btnBack.setOnClickListener {
+                finish()
+            }
+            ivFood.setOnClickListener {
+                startActivity(Intent(this@MenuActivity, AdminFoodActivity::class.java))
+            }
+            ivDrink.setOnClickListener {
+                startActivity(Intent(this@MenuActivity, AdminDrinkActivity::class.java))
+
+            }
+
+        }
 
     }
 }

@@ -134,11 +134,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private suspend fun handleSuccessLogin(loginEntity: LoginEntity) {
-        loginEntity.token?.let {
-            dataStore.saveUserToken(it)
+        loginEntity.token?.takeIf { it.isNotEmpty() }?.let { token ->
+            dataStore.saveUserToken(token)
         }
+
+        loginEntity.userData?.role?.takeIf { it.isNotEmpty() }?.let { role ->
+            dataStore.saveRoleLogin(role)
+        }
+
         goToMainActivity(loginEntity)
     }
+
 
     private fun goToRegisterActivity() {
         binding.btnRegister.setOnClickListener {
@@ -148,12 +154,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun goToMainActivity(loginEntity: LoginEntity?) {
         val role = loginEntity?.userData?.role
-        if (role == ROLE){
+        if (role == ROLE) {
             startActivity(
                 Intent(this@LoginActivity, AdminDashboardActivity::class.java)
             )
             finish()
-        }else{
+        } else {
             startActivity(
                 Intent(this@LoginActivity, HomeActivity::class.java)
                     .putExtra(HomeActivity.HOME_EXTRA, loginEntity)

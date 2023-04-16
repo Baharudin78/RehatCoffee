@@ -37,27 +37,33 @@ class ProductRepositoryImpl @Inject constructor(
                 }
                 if (response.isSuccessful){
                     val body = response.body()!!
-                    val image = body.data?.images
+                    val image = body.data?.images?.map { it?.toImageMenuEntity() }
                     val letter = ProductEntity(
                         body.data?.description,
                         body.data?.id,
-                        images = image!!.map { it?.toImageMenuEntity() },
+                        images = image!!,
                         body.data?.kinds,
                         body.data?.price,
                         body.data?.productName
                     )
                     emit(BaseResult.Success(letter))
                 }else{
-                    val type = object : TypeToken<WrappedResponse<ProductResponse>>(){}.type
-                    val err = Gson().fromJson<WrappedResponse<ProductResponse>>(response.errorBody()!!.charStream(), type)!!
-                    err.status = response.code()
-                    emit(BaseResult.Error(err))
+                    val errorBody = response.errorBody()?.string()
+                    if (errorBody != null) {
+                        val type = object : TypeToken<WrappedResponse<ProductResponse>>(){}.type
+                        val err = Gson().fromJson<WrappedResponse<ProductResponse>>(errorBody, type)!!
+                        err.status = response.code()
+                        emit(BaseResult.Error(err))
+                    } else {
+                        emit(BaseResult.Error(WrappedResponse("Unknown error",null)))
+                    }
                 }
             } catch (e: Exception) {
-                emit(BaseResult.Error(WrappedResponse<ProductResponse>( e.message ?: "Unknown error",null)))
+                emit(BaseResult.Error(WrappedResponse(e.message ?: "Unknown error",null)))
             }
         }
     }
+
 
     override suspend fun getProduct(kinds : String): Flow<BaseResult<List<ProductEntity>, WrappedListResponse<ProductResponse>>> {
         return flow {

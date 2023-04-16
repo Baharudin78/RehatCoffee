@@ -29,4 +29,17 @@
     <string name="notification_title">Pesanan Selesai</string>
     <string name="pemberitahuan">Pemberitahuan</string>
     <string name="history">History</string>
+    <string name="hapus">Hapus</string>
+    <string name="ubah">Ubah</string>
+    <string name="tambah_product">Tambah Product</string>
+    <string name="unggah_foto_product">Unggah Foto Product</string>
+    <string name="nama_product">Nama Product</string>
+    <string name="masukan_nama_product">Masukan nama Product</string>
+    <string name="harga_product">Harga Product</string>
+    <string name="masukan_harga_product">Masukan Harga Product</string>
+    <string name="deskripsi_product">Deskripsi Product</string>
+    <string name="kirim">Kirim</string>
+    <string name="jenis_product">Jenis Product</string>
+    <string name="masukan_deskripsi_product">Masukan Deskripsi Product</string>
+    <string name="update_product">Update Product</string>
 </resources>

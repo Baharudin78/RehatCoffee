@@ -7,9 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.core.TokenDataStore
 import com.rehat.rehatcoffee.databinding.ActivityGetStartedBinding
+import com.rehat.rehatcoffee.presentation.admin.dashboard.AdminDashboardActivity
 import com.rehat.rehatcoffee.presentation.home.HomeActivity
 import com.rehat.rehatcoffee.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -38,17 +41,24 @@ class GetStartedActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun checkIsLoggedIn(){
-        dataStore.userTokenFlow.collect{
-            if (it.isNotEmpty()){
-                goToHomeActivity()
-            }
+    private suspend fun checkIsLoggedIn() {
+        val userToken = dataStore.userTokenFlow.first()
+        if (userToken.isNotEmpty()) {
+            goToHomeActivity()
         }
     }
 
-    private fun goToHomeActivity(){
-        startActivity(Intent(this, HomeActivity::class.java))
-        finish()
+    private suspend fun goToHomeActivity() {
+        val userRole = dataStore.userRole.first()
+        if (userRole.isNotEmpty()) {
+            val intent = if (userRole == "user") {
+                Intent(this, HomeActivity::class.java)
+            } else {
+                Intent(this, AdminDashboardActivity::class.java)
+            }
+            startActivity(intent)
+            finish()
+        }
     }
 
 }

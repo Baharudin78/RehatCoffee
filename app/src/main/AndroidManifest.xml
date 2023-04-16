@@ -19,6 +19,18 @@
         android:theme="@style/Theme.RehatCoffee"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.admin.create.EditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.menu.AdminFoodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.menu.AdminDrinkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.create.CreateMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.admin.menu.MenuActivity"
             android:exported="false" />
         <activity

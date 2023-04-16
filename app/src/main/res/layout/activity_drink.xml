@@ -18,56 +18,98 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ic_back"
+            android:id="@+id/btnBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="start"
             android:layout_weight="0.1"
             android:src="@drawable/ic_back" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:gravity="end"
-            android:orientation="horizontal">
+    </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/btnToCart"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                    app:srcCompat="@drawable/cart" />
-                <TextView
-                    android:id="@+id/tv_cart_count"
-                    android:layout_width="25dp"
-                    android:layout_height="30dp"
-                    android:padding="8dp"
-                    android:layout_marginStart="20dp"
-                    android:background="@drawable/badge_notification"
-                    android:textColor="#FFFFFF"
-                    android:visibility="gone"
-                    android:textSize="9sp"
-                    android:textStyle="bold"
-                    tools:text="3"
-                    android:gravity="center" />
-            </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="0.9"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btnToCart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:srcCompat="@drawable/cart" />
+
+            <TextView
+                android:id="@+id/tv_cart_count"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/badge_notification"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="#FFFFFF"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="3" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/btnToNotif"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="24dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 app:srcCompat="@drawable/bell" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_notif_count"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/badge_notification"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="#FFFFFF"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="3" />
+        </FrameLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvKeranjang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/minuman"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDrink"
@@ -77,7 +119,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvKeranjang" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnOrder"
@@ -88,8 +130,8 @@
         android:layout_marginBottom="24dp"
         android:fontFamily="@font/roboto"
         android:text="@string/pesan"
-        android:visibility="gone"
         android:textAllCaps="false"
+        android:visibility="gone"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,10 +141,11 @@
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnOrder"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/rvDrink" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
