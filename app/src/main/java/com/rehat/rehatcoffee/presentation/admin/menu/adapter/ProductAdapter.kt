@@ -49,7 +49,7 @@ class ProductAdapter(
                         .into(ivPhoto)
                 }
                 tvName.text = product.productName
-                tvAlias.text = product.id
+                tvAlias.text = product.description
                 tvPrice.text = generateIDRCurrency(product.price?.toDouble() ?: 0.0)
 
                 btnEdit.setOnClickListener {

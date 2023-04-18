@@ -2,28 +2,28 @@ package com.rehat.rehatcoffee.presentation.admin.orderan.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rehat.rehatcoffee.databinding.ItemAdminOrderBinding
 import com.rehat.rehatcoffee.databinding.ItemSubAdminOderBinding
 import com.rehat.rehatcoffee.domain.adminorder.entity.AdminOrderEntity
 import com.rehat.rehatcoffee.domain.adminorder.entity.AdminProductOrderEntity
-import com.rehat.rehatcoffee.domain.menu.entity.MenuEntity
 import com.rehat.rehatcoffee.presentation.common.extention.generateIDRCurrency
 import com.rehat.rehatcoffee.presentation.common.extention.gone
 import com.rehat.rehatcoffee.presentation.common.extention.visible
 
 class AdminOrderAdapter(private val dataList: MutableList<AdminOrderEntity>) : RecyclerView.Adapter<AdminOrderAdapter.ParentViewHolder>() {
 
-    interface OnItemClickToCart {
+    interface OnItemClickToDone {
         fun onClickToDone(adminOrder: AdminOrderEntity)
     }
 
-    fun setItemClicktoDone(onClick: OnItemClickToCart) {
+    fun setItemClicktoDone(onClick: OnItemClickToDone) {
         onClickListenerToDone = onClick
     }
 
-    private var onClickListenerToDone: OnItemClickToCart? = null
+    private var onClickListenerToDone: OnItemClickToDone? = null
 
     fun updateListOrder(orders: List<AdminOrderEntity>) {
         dataList.clear()
@@ -40,8 +40,10 @@ class AdminOrderAdapter(private val dataList: MutableList<AdminOrderEntity>) : R
             }
             binding.btDone.setOnClickListener {
                 onClickListenerToDone?.onClickToDone(order)
-                binding.tvDone.visible()
-                binding.btDone.gone()
+                if (order.orderStatus) {
+                    binding.tvDone.isVisible = true
+                    binding.btDone.isVisible = false
+                }
             }
         }
     }

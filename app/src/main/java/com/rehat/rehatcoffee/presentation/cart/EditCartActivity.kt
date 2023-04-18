@@ -62,7 +62,9 @@ class EditCartActivity : AppCompatActivity() {
 
     private fun updateData() {
         binding.btnSave.setOnClickListener {
-            cartEntity?.id?.let { it1 -> viewModel.updateCart(it1, counterQty) }
+            cartEntity?.id?.let { id ->
+                viewModel.updateCart(id, counterQty)
+            }
         }
     }
 
@@ -111,11 +113,4 @@ class EditCartActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleLoading(isLoading: Boolean) {
-        if (isLoading) {
-           // binding.btnSave.isEnabled = false
-        } else {
-         //   binding.btnSave.isEnabled
-        }
-    }
 }

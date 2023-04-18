@@ -152,7 +152,7 @@ class EditProductActivity : AppCompatActivity() {
 
                         runCatching {
                             Log.d("PRODYUCFD", product.toString())
-                            product.description?.let { it1 -> viewModel.updateProduct(it1,productParams, partFile1) }
+                            product.id?.let { it1 -> viewModel.updateProduct(it1,productParams, partFile1) }
                         }.onSuccess {
                             showToast("Berhasil")
                         }.onFailure {

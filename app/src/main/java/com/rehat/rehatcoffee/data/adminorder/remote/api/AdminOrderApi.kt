@@ -6,6 +6,7 @@ import com.rehat.rehatcoffee.data.common.utils.WrappedListResponse
 import com.rehat.rehatcoffee.data.common.utils.WrappedResponse
 import retrofit2.Response
 import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -18,6 +19,7 @@ interface AdminOrderApi {
     ) : Response<WrappedListResponse<AdminOrderResponse>>
 
     @PUT(ORDER_ADMIN)
+    @FormUrlEncoded
     suspend fun updateOrder(
         @Query("id") id : String,
         @Field("order_status") orderStatus: Boolean,

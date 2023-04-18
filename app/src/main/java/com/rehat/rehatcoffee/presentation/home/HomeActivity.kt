@@ -59,6 +59,11 @@ class HomeActivity : AppCompatActivity() {
             btnToList.setOnClickListener {
                 startActivity(Intent(this@HomeActivity, OrderListActivity::class.java))
             }
+            btnLogout.setOnClickListener {
+                lifecycleScope.launch {
+                    logOut()
+                }
+            }
         }
     }
 
@@ -124,6 +129,14 @@ class HomeActivity : AppCompatActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
+
+    private suspend fun logOut(){
+        dataStore.clearUserToken()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        this.startActivity(intent)
+    }
+
     companion object{
         const val HOME_EXTRA = Constants.HOME_EXTRA
     }
