@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".BaseApp"
@@ -19,9 +21,13 @@
         android:theme="@style/Theme.RehatCoffee"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.admin.orderan.OrderAdminConfirmActivity"
+            android:name=".presentation.admin.orderan.OrderAdminStatusActivity"
             android:exported="false"
             android:theme="@style/Theme.NTT.Dialog"/>
+        <activity
+            android:name=".presentation.admin.orderan.OrderAdminConfirmActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NTT.Dialog" />
         <activity
             android:name=".presentation.admin.create.EditProductActivity"
             android:exported="false" />
@@ -95,6 +101,9 @@
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/channel_id" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GetAdminOrderUseCase @Inject constructor(
     private val adminOrderRepository: AdminOrderRepository
 ) {
-    suspend fun getOrderAdmin(orderStatus :Boolean) : Flow<BaseResult<List<AdminOrderEntity>, WrappedListResponse<AdminOrderResponse>>>{
-        return adminOrderRepository.getAdminOrder(orderStatus)
+    suspend fun getOrderAdmin(orderStatus :Boolean,isAdmin : Boolean) : Flow<BaseResult<List<AdminOrderEntity>, WrappedListResponse<AdminOrderResponse>>>{
+        return adminOrderRepository.getAdminOrder(orderStatus, isAdmin)
     }
 }

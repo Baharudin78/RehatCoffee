@@ -18,9 +18,9 @@ import javax.inject.Inject
 class AdminOrderRepositoryImpl @Inject constructor(
     private val adminOrderApi: AdminOrderApi
 ) : AdminOrderRepository{
-    override suspend fun getAdminOrder(orderStatus: Boolean): Flow<BaseResult<List<AdminOrderEntity>, WrappedListResponse<AdminOrderResponse>>> {
+    override suspend fun getAdminOrder(orderStatus: Boolean, isAdmin : Boolean): Flow<BaseResult<List<AdminOrderEntity>, WrappedListResponse<AdminOrderResponse>>> {
         return flow {
-            val response = adminOrderApi.getOrderAdmin(orderStatus)
+            val response = adminOrderApi.getOrderAdmin(orderStatus, isAdmin)
             if (response.isSuccessful){
                 val body = response.body()!!
                 val order = mutableListOf<AdminOrderEntity>()
@@ -39,14 +39,63 @@ class AdminOrderRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateOrder(
+    override suspend fun updateOrderPayment(
         id: String,
-        orderStatus: Boolean,
         payStatus: Boolean
     ): Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>> {
         return flow {
             try {
-                val updateOrderResponse = adminOrderApi.updateOrder(id, orderStatus, payStatus)
+                val updateOrderResponse = adminOrderApi.updateOrderPayment(id, payStatus)
+                if (updateOrderResponse.isSuccessful) {
+                    val body = updateOrderResponse.body()
+                    if (body != null) {
+                        val updateOrder = body.data?.toOrderAdminEntity()
+                        if (updateOrder != null) {
+                            emit(BaseResult.Success(updateOrder))
+                        } else {
+                            emit(
+                                BaseResult.Error(
+                                    WrappedResponse(
+                                        message = "Empty response body",
+                                        null
+                                    )
+                                )
+                            )
+                        }
+                    } else {
+                        emit(
+                            BaseResult.Error(
+                                WrappedResponse(
+                                    message = "Null response body",
+                                    null
+                                )
+                            )
+                        )
+                    }
+                } else {
+                    val errorResponse = parseErrorResponse(updateOrderResponse)
+                    emit(BaseResult.Error(errorResponse))
+                }
+            } catch (e: Exception) {
+                emit(
+                    BaseResult.Error(
+                        WrappedResponse(
+                            message = e.message ?: "Error Occured",
+                            status = null
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    override suspend fun updateOrderStatus(
+        id: String,
+        orderStatus: Boolean
+    ): Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>> {
+        return flow {
+            try {
+                val updateOrderResponse = adminOrderApi.updateOrderStatus(id, orderStatus)
                 if (updateOrderResponse.isSuccessful) {
                     val body = updateOrderResponse.body()
                     if (body != null) {

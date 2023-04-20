@@ -15,14 +15,21 @@ interface AdminOrderApi {
 
     @GET(ORDER_ADMIN)
     suspend fun getOrderAdmin(
-        @Query("order_status")orderStatus : Boolean
+        @Query("order_status")orderStatus : Boolean,
+        @Query("is_admin") isAdmin : Boolean
     ) : Response<WrappedListResponse<AdminOrderResponse>>
 
     @PUT(ORDER_ADMIN)
     @FormUrlEncoded
-    suspend fun updateOrder(
+    suspend fun updateOrderPayment(
+        @Query("id") id : String,
+        @Field("pay_status") payStatus: Boolean,
+    ) : Response<WrappedResponse<AdminOrderResponse>>
+
+    @PUT(ORDER_ADMIN)
+    @FormUrlEncoded
+    suspend fun updateOrderStatus(
         @Query("id") id : String,
         @Field("order_status") orderStatus: Boolean,
-        @Field("pay_status") payStatus: Boolean,
     ) : Response<WrappedResponse<AdminOrderResponse>>
 }

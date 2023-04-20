@@ -8,6 +8,7 @@ import com.rehat.rehatcoffee.domain.common.base.BaseResult
 import kotlinx.coroutines.flow.Flow
 
 interface AdminOrderRepository {
-    suspend fun getAdminOrder(orderStatus : Boolean) : Flow<BaseResult<List<AdminOrderEntity>, WrappedListResponse<AdminOrderResponse>>>
-    suspend fun updateOrder(id :String, orderStatus: Boolean, payStatus : Boolean) : Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>>
+    suspend fun getAdminOrder(orderStatus : Boolean,isAdmin : Boolean) : Flow<BaseResult<List<AdminOrderEntity>, WrappedListResponse<AdminOrderResponse>>>
+    suspend fun updateOrderPayment(id :String,payStatus : Boolean) : Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>>
+    suspend fun updateOrderStatus(id :String,orderStatus: Boolean) : Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>>
 }

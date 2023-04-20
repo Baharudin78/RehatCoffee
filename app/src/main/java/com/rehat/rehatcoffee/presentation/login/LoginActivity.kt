@@ -19,9 +19,7 @@ import com.rehat.rehatcoffee.data.login.remote.dto.LoginResponse
 import com.rehat.rehatcoffee.databinding.ActivityLoginBinding
 import com.rehat.rehatcoffee.domain.login.entity.LoginEntity
 import com.rehat.rehatcoffee.presentation.admin.dashboard.AdminDashboardActivity
-import com.rehat.rehatcoffee.presentation.common.extention.isEmail
-import com.rehat.rehatcoffee.presentation.common.extention.showGenericAlertDialog
-import com.rehat.rehatcoffee.presentation.common.extention.showToast
+import com.rehat.rehatcoffee.presentation.common.extention.*
 import com.rehat.rehatcoffee.presentation.home.HomeActivity
 import com.rehat.rehatcoffee.presentation.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -127,9 +125,10 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoading(isLoading: Boolean) {
         binding.btnLogin.isEnabled = !isLoading
         binding.btnRegister.isEnabled = !isLoading
-        binding.progress.isIndeterminate = isLoading
-        if (!isLoading) {
-            binding.progress.progress = 0
+        if (isLoading) {
+            binding.progress.visible()
+        } else {
+            binding.progress.gone()
         }
     }
 

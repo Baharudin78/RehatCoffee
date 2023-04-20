@@ -10,11 +10,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.rehat.rehatcoffee.core.Constants.EXTRA_DATA
-import com.rehat.rehatcoffee.databinding.ActivityOrderAdminConfirmBinding
+import com.rehat.rehatcoffee.core.Constants
+import com.rehat.rehatcoffee.databinding.ActivityOrderAdminStatusBinding
 import com.rehat.rehatcoffee.domain.adminorder.entity.AdminOrderEntity
-import com.rehat.rehatcoffee.domain.cart.entity.CartDataEntity
-import com.rehat.rehatcoffee.presentation.cart.CartViewState
 import com.rehat.rehatcoffee.presentation.common.extention.parcelable
 import com.rehat.rehatcoffee.presentation.common.extention.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,27 +20,26 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class OrderAdminConfirmActivity : AppCompatActivity() {
-
-    private lateinit var binding : ActivityOrderAdminConfirmBinding
+class OrderAdminStatusActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityOrderAdminStatusBinding
     private val viewModel : OrderAdminViewModel by viewModels()
     private var adminOrder: AdminOrderEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOrderAdminConfirmBinding.inflate(layoutInflater)
+        binding = ActivityOrderAdminStatusBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         window?.setGravity(Gravity.CENTER)
 
         binding.close.setOnClickListener {
             finish()
         }
-        adminOrder = intent.parcelable(EXTRA_DATA) as AdminOrderEntity?
+        adminOrder = intent.parcelable(Constants.EXTRA_DATA) as AdminOrderEntity?
 
         observeState()
         initListener()
-
     }
 
     private fun observeState() {
@@ -57,7 +54,7 @@ class OrderAdminConfirmActivity : AppCompatActivity() {
     private fun initListener(){
         binding.btnKonfirm.setOnClickListener {
             adminOrder?.id?.let { id ->
-                viewModel.updateOrderPayment(id,  true)
+                viewModel.updateOrderStatus(id,  true)
             }
         }
 

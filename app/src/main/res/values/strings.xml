@@ -43,6 +43,10 @@
     <string name="masukan_deskripsi_product">Masukan Deskripsi Product</string>
     <string name="update_product">Update Product</string>
     <string name="selesaikan">Selesaikan</string>
+    <string name="selesaikan_pembayaran">Selesai Bayar</string>
     <string name="selesai">Selesai</string>
     <string name="logout">Logout</string>
+    <string name="channel_id">my_channel_id</string>
+    <string name="lunas">Lunas</string>
+    <string name="pesanan_selesai">Pesanan Selesai</string>
 </resources>

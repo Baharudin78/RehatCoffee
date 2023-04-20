@@ -82,6 +82,9 @@ dependencies {
     //Glide
     implementation("com.github.bumptech.glide:glide:4.15.1")
 
+    // Chucker
+    debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
 
 }

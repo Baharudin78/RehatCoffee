@@ -19,7 +19,7 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="30dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_gravity="start"
             android:layout_weight="0.1"
@@ -55,11 +55,9 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rvCart" />
-
-
+        app:layout_constraintBottom_toBottomOf="@+id/rvOrder"
+        app:layout_constraintTop_toTopOf="@+id/rvOrder"
+        app:layout_constraintStart_toStartOf="@+id/rvOrder"
+        app:layout_constraintEnd_toEndOf="@+id/rvOrder"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

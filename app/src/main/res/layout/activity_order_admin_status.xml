@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apakah Anda Akan konfirmasi Pembayaran Pesanan ?"
+                android:text="Apakah Anda Akan konfirmasi Pesanan Selesai ?"
                 android:textSize="20sp"
                 android:textColor="@color/greenPrimary"
                 android:padding="30dp"

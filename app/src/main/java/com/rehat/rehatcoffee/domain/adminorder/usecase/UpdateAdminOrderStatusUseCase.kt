@@ -8,13 +8,13 @@ import com.rehat.rehatcoffee.domain.common.base.BaseResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UpdateAdminOrderUseCase @Inject constructor(
+class UpdateAdminOrderStatusUseCase @Inject constructor(
     private val adminOrderRepository: AdminOrderRepository
 ) {
-    suspend fun updateOrderAdminPayment(
+    suspend fun updateOrderAdminStatus(
         id: String,
-        payStatus: Boolean
-    ) : Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>>{
-        return adminOrderRepository.updateOrderPayment(id, payStatus)
+        orderStatus: Boolean
+    ) : Flow<BaseResult<AdminOrderEntity, WrappedResponse<AdminOrderResponse>>> {
+        return adminOrderRepository.updateOrderStatus(id, orderStatus)
     }
 }

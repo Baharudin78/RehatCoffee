@@ -1,9 +1,11 @@
 package com.rehat.rehatcoffee.core
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -43,9 +45,20 @@ class FirebaseMessageService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
 
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0, notificationBuilder.build())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.notification_title)
+            val descriptionText = "Order baru"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
+        val importance = NotificationManager.IMPORTANCE_HIGH
+
+//        val notificationManager =
+//            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        notificationManager.notify(0, notificationBuilder.build(), importance)
     }
 
     companion object {

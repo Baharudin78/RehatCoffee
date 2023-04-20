@@ -7,6 +7,7 @@ import com.rehat.rehatcoffee.data.cart.remote.dto.CartDataResponse
 import com.rehat.rehatcoffee.data.common.utils.WrappedResponse
 import com.rehat.rehatcoffee.domain.adminorder.entity.AdminOrderEntity
 import com.rehat.rehatcoffee.domain.adminorder.usecase.GetAdminOrderUseCase
+import com.rehat.rehatcoffee.domain.adminorder.usecase.UpdateAdminOrderStatusUseCase
 import com.rehat.rehatcoffee.domain.adminorder.usecase.UpdateAdminOrderUseCase
 import com.rehat.rehatcoffee.domain.cart.entity.CartDataEntity
 import com.rehat.rehatcoffee.domain.common.base.BaseResult
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class OrderAdminViewModel @Inject constructor(
     private val getAdminOrderUseCase: GetAdminOrderUseCase,
-    private val updateAdminOrderUseCase: UpdateAdminOrderUseCase
+    private val updateAdminOrderUseCase: UpdateAdminOrderUseCase,
+    private val updateAdminOrderStatusUseCase: UpdateAdminOrderStatusUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AdminOrderViewState>(AdminOrderViewState.Init)
@@ -44,12 +46,12 @@ class OrderAdminViewModel @Inject constructor(
     }
 
     init {
-        fetchOrder(true)
+        fetchOrder(false, true)
     }
 
-    fun fetchOrder(orderStatus: Boolean) {
+    fun fetchOrder(orderStatus: Boolean, isAdmin : Boolean) {
         viewModelScope.launch {
-            getAdminOrderUseCase.getOrderAdmin(orderStatus)
+            getAdminOrderUseCase.getOrderAdmin(orderStatus, isAdmin)
                 .onStart {
                     setLoading()
                 }
@@ -71,13 +73,31 @@ class OrderAdminViewModel @Inject constructor(
         }
     }
 
-    fun updateCart(
+    fun updateOrderPayment(
         id: String,
-        orderStatus: Boolean,
         payStatus: Boolean
     ) {
         viewModelScope.launch {
-            updateAdminOrderUseCase.updateOrderAdmin(id, orderStatus, payStatus)
+            updateAdminOrderUseCase.updateOrderAdminPayment(id, payStatus)
+                .onStart {
+                    setLoading()
+                }
+                .catch { exception ->
+                    hideLoading()
+                    showToast(exception.message ?: "Error Occured")
+                }
+                .collect { result ->
+                    handleUpdateOrder(result)
+                }
+        }
+    }
+
+    fun updateOrderStatus(
+        id: String,
+        orderStatus: Boolean
+    ) {
+        viewModelScope.launch {
+            updateAdminOrderStatusUseCase.updateOrderAdminStatus(id, orderStatus)
                 .onStart {
                     setLoading()
                 }

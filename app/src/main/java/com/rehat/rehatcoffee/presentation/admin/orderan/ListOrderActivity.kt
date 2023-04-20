@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rehat.rehatcoffee.R
 import com.rehat.rehatcoffee.core.Constants
 import com.rehat.rehatcoffee.databinding.ActivityListOrderBinding
@@ -27,8 +28,8 @@ import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class ListOrderActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityListOrderBinding
-    private val viewModel : OrderAdminViewModel by viewModels()
+    private lateinit var binding: ActivityListOrderBinding
+    private val viewModel: OrderAdminViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListOrderBinding.inflate(layoutInflater)
@@ -40,29 +41,42 @@ class ListOrderActivity : AppCompatActivity() {
         fetchOrder()
     }
 
-    private fun initListener(){
+    private fun initListener() {
         binding.apply {
             btnBack.setOnClickListener {
                 finish()
             }
         }
     }
-    private fun setupRecycleview(){
+
+    private fun setupRecycleview() {
         val adapterOrder = AdminOrderAdapter(mutableListOf())
-        adapterOrder.setItemClicktoDone(object : AdminOrderAdapter.OnItemClickToDone{
+        adapterOrder.setItemClicktoDone(object : AdminOrderAdapter.OnItemClickToDone {
             override fun onClickToDone(adminOrder: AdminOrderEntity) {
+                val intent = Intent(this@ListOrderActivity, OrderAdminStatusActivity::class.java)
+                    .putExtra(Constants.EXTRA_DATA, adminOrder)
+                updateResut.launch(intent)
+            }
+        })
+
+        adapterOrder.setItemClicktoDonePayment(object : AdminOrderAdapter.OnItemClickToDonePayment{
+            override fun onClickToDonePayment(adminOrder: AdminOrderEntity) {
                 val intent = Intent(this@ListOrderActivity, OrderAdminConfirmActivity::class.java)
                     .putExtra(Constants.EXTRA_DATA, adminOrder)
                 updateResut.launch(intent)
             }
         })
+        binding.rvOrder.apply {
+            adapter = adapterOrder
+            layoutManager = LinearLayoutManager(this@ListOrderActivity)
+        }
     }
 
-    private fun fetchOrder(){
-        viewModel.fetchOrder(true)
+    private fun fetchOrder() {
+        viewModel.fetchOrder(false, true)
     }
 
-    private fun initObserver(){
+    private fun initObserver() {
         observeState()
         observeOrder()
     }
@@ -105,10 +119,9 @@ class ListOrderActivity : AppCompatActivity() {
     private val updateResut =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.fetchOrder(true)
+                viewModel.fetchOrder(orderStatus = false, isAdmin = true)
             }
         }
-
 
     private fun handleLoading(isLoading: Boolean) {
         if (isLoading) {
@@ -117,7 +130,4 @@ class ListOrderActivity : AppCompatActivity() {
             binding.progressBar.gone()
         }
     }
-
-
-
 }

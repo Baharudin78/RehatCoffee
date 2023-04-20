@@ -22,9 +22,7 @@ import com.rehat.rehatcoffee.databinding.ActivityRegisterBinding
 import com.rehat.rehatcoffee.domain.login.entity.LoginEntity
 import com.rehat.rehatcoffee.domain.register.entity.RegisterEntity
 import com.rehat.rehatcoffee.domain.register.entity.RoleEntity
-import com.rehat.rehatcoffee.presentation.common.extention.isEmail
-import com.rehat.rehatcoffee.presentation.common.extention.showGenericAlertDialog
-import com.rehat.rehatcoffee.presentation.common.extention.showToast
+import com.rehat.rehatcoffee.presentation.common.extention.*
 import com.rehat.rehatcoffee.presentation.home.HomeActivity
 import com.rehat.rehatcoffee.presentation.login.LoginActivity
 import com.rehat.rehatcoffee.presentation.register.adapter.RoleAdapter
@@ -171,9 +169,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun handleLoading(isLoading: Boolean) {
         binding.btnRegister.isEnabled = !isLoading
         binding.btnRegister.isEnabled = !isLoading
-        binding.progress.isIndeterminate = isLoading
-        if (!isLoading) {
-            binding.progress.progress = 0
+        if (isLoading) {
+            binding.progress.visible()
+        } else {
+            binding.progress.gone()
         }
     }
 
