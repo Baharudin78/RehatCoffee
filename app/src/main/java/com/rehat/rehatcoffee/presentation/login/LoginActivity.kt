@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var fcmToken: String? = null
     private val viewModel: LoginViewModel by viewModels()
-    private val loginEntity: LoginEntity? = null
 
     @Inject
     lateinit var dataStore: TokenDataStore

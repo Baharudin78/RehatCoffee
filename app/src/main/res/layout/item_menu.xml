@@ -82,7 +82,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddToCart"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/roboto"

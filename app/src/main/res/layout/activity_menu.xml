@@ -51,7 +51,7 @@
                 android:id="@+id/ivFood"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:srcCompat="@drawable/vegetable" />
+                app:srcCompat="@drawable/makanan" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/drink" />
+                app:srcCompat="@drawable/minuman" />
 
             <TextView
                 android:layout_width="wrap_content"

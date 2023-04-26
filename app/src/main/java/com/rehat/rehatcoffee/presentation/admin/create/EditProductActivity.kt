@@ -51,6 +51,12 @@ class EditProductActivity : AppCompatActivity() {
 
         product = intent.parcelable<ProductEntity>(EDIT_PRODUCT)!!
 
+        binding.apply {
+           inputNamaProduct.setText(product.productName)
+           inputHargaProduct.setText(product.price.toString())
+           inputDeskripsi.setText(product.description)
+        }
+
         Log.d("PRODYUCFD", product.toString())
 
 

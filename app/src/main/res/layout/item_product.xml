@@ -41,7 +41,6 @@
                     android:maxLines="1"
                     tools:text="Testing"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/roboto"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_photo"
@@ -57,7 +56,6 @@
                     android:maxLines="1"
                     tools:text="Testing"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/roboto"
                     android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_photo"
@@ -73,7 +71,6 @@
                     android:maxLines="1"
                     android:paddingBottom="8dp"
                     android:textSize="12sp"
-                    android:fontFamily="@font/roboto"
                     android:textColor="@color/greenPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_photo"
@@ -82,10 +79,9 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEdit"
-                    android:layout_width="110dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/roboto"
                     android:text="@string/ubah"
                     android:textAllCaps="false"
                     app:cornerRadius="20dp"
@@ -94,10 +90,9 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDelete"
-                    android:layout_width="110dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/roboto"
                     android:text="@string/hapus"
                     android:textAllCaps="false"
                     app:cornerRadius="20dp"

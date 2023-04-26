@@ -67,7 +67,7 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString().trim()
             val username = binding.usernameEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
-            val role = binding.tvRole.text.toString()
+            val role = "user"
             if (validate(email, username, password, role)) {
                 val registerRequest = fcmToken?.let { token ->
                     RegisterRequest(
