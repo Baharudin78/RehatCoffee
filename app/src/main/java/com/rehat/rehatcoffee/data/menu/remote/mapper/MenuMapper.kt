@@ -9,6 +9,8 @@ fun MenuResponse.toMenuEntity(): MenuEntity {
     return MenuEntity(
         id = id,
         description = description,
+        price = price,
+        productName = productName,
         imagesEntity = convertImageResponseToEntity(images)
     )
 
