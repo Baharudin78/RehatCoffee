@@ -1,7 +1,7 @@
 package com.rehat.rehatcoffee.core
 
 object Constants {
-    const val BASE_URL = "https://app.arsip-surat-elektronik.my.id/api/"
+    const val BASE_URL = "https://rehat-cafe.adaptable.app/api/"
     //Extra
     const val HOME_EXTRA = "HOME_EXTRA"
     const val MY_PREF = "my_preferences"

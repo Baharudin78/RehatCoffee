@@ -55,7 +55,7 @@ class AdminFoodActivity : AppCompatActivity() {
         val foodAdapter = ProductAdapter(mutableListOf())
         foodAdapter.setItemClicktoDelete(object : ProductAdapter.OnItemClickToDelete{
             override fun onClickToDelete(productEntity: ProductEntity) {
-                productEntity.description?.let {
+                productEntity.id?.let {
                     viewModel.deleteProduct(it)
                 }
             }
